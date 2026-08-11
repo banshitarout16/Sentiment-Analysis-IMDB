@@ -1,77 +1,104 @@
-#  Sentiment Analysis - IMDB using PyTorch
+# IMDB Sentiment Analysis
 
----
+## Overview
 
-## Features
+Sentiment analysis of IMDB movie reviews using an RNN model implemented with PyTorch.
 
-- Binary Sentiment Classification
-- Text Preprocessing
-- Vocabulary Creation
-- Tokenization & Numerical Encoding
-- Sequence Padding
-- Custom PyTorch Dataset & DataLoader
-- RNN Model built with PyTorch
-- Model Training & Evaluation
-- Sentiment Prediction on New Reviews
+## RNN Architecture
 
----
+```
+                +----------------------+
+                |     Load Dataset     |
+                | (Reviews, Labels)    |
+                +----------+-----------+
+                           |
+                           v
+                +----------------------+
+                | Text Preprocessing   |
+                | Lowercase            |
+                | Remove Punctuation   |
+                | Remove Urls, HTML    |
+                | Stopwords(a,an,the)  |
+                | Stemming             |
+                | Tokenization         |
+                | Vectoization (TF-IDF)|
+                | Padding              |
+                +----------+-----------+
+                           |
+                           v
+                +----------------------+
+                | Tensor Conversion    |
+                | Dataset              |
+                | DataLoader           |
+                +----------+-----------+
+                           |
+                           v
+                +----------------------+
+                |      RNN Model       |
+                | Embedding Layer      |
+                | RNN Layer            |
+                | Fully Connected      |
+                | Sigmoid Output       |
+                +----------+-----------+
+                           |
+               +-----------+-----------+
+               |                       |
+               v                       v
+      +----------------+      +----------------+
+      |     Train      |      |    Evaluate    |
+      | Forward Pass   |      | Accuracy       |
+      | Loss           |      | Precision      |
+      | Backpropagation|      | Recall, F1     |
+      +--------+-------+      +----------------+
+               |
+               v
+      +------------------------+
+      |  New Review Prediction |
+      +-----------+------------+
+                  |
+          +-------+-------+
+          |               |
+          v               v
+     Positive (1)    Negative (0)
+```
 
 
-- **Review** –  review text
-- **Sentiment** – Positive / Negative
 
-Label Encoding:
+## Technologies
 
-| Sentiment | Label |
-|-----------|------:|
-| Negative  | 0 |
-| Positive  | 1 |
-
----
-
-## Tech Stack
-
-- Python
-- PyTorch
-- TorchText 
-- NumPy
 - Pandas
+- NumPy
+- re
+- NLTK
+  - word_tokenize
+  - stopwords
+  - PorterStemmer
 - Scikit-learn
-- Matplotlib
-- Jupyter Notebook
+  - LabelEncoder
+  - TfidfVectorizer
+  - train_test_split
+- PyTorch
+  - TensorDataset
+  - DataLoader
+  - nn
+  - optim
 
----
+## Dataset
 
-##  Project Workflow
-
-1. Load IMDB Dataset
-2. Preprocess Review Text
-3. Encode Sentiment Labels
-4. Build Vocabulary
-5. Convert Text to Numerical Sequences
-6. Pad Sequences
-7. Create PyTorch Dataset & DataLoader
-8. Build RNN Model
-9. Train the Model
-10. Evaluate Performance
-11. Predict Sentiment for New Reviews
-
----
-
-##  Project Structure
-
-```
-Sentiment-Analysis-IMDB/
-│
-├── IMDB.ipynb
-├── IMDB Dataset.csv
-├── .gitignore
-├── README.md
-```
-
----
+* IMDB Movie Reviews
+* 50,000 reviews
+* 49,582 reviews after duplicate removal
+* Classes: Positive, Negative
 
 ## Model
 
-This project implements a **Recurrent Neural Network (RNN)** using **PyTorch** for binary sentiment classification on IMDB.
+* Framework: PyTorch
+* Architecture: RNN
+* Hidden Size: 128
+* Optimizer: Adam
+* Loss Function: Binary Cross Entropy
+* Epochs: 10
+  
+## Result
 
+The RNN model was trained to classify IMDB reviews into Positive and Negative sentiment categories.
